@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.scubamusic0_0_1.LoginController">
+   <children>
+       <VBox alignment="CENTER" layoutX="341.0" layoutY="137.0" prefHeight="133.0" prefWidth="237.0">
+           <TextField prefHeight="35.0" prefWidth="600.0" promptText="Username">
+               <font>
+                   <Font size="18.0" />
+               </font>
+           </TextField>
+           <PasswordField prefHeight="19.0" prefWidth="195.0" promptText="Password" translateY="10.0">
+               <font>
+                   <Font size="18.0" />
+               </font>
+           </PasswordField>
+         <Button fx:id="testButton" mnemonicParsing="false" onAction="#onLoginClick" prefHeight="21.0" prefWidth="79.0" scaleX="1.2" text="Log in">
+            <VBox.margin>
+               <Insets top="20.0" />
+            </VBox.margin>
+         </Button>
+       </VBox>
+       <Text layoutX="14.0" layoutY="292.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="ScubaMusic" wrappingWidth="354.6748046875">
+           <font>
+               <Font name="Kohinoor Telugu" size="64.0" />
+           </font>
+       </Text>
+       <Text layoutX="39.0" layoutY="117.0" opacity="0.42" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to" textAlignment="CENTER" wrappingWidth="236.6748046875">
+           <font>
+               <Font name="Kohinoor Telugu" size="48.0" />
+           </font>
+       </Text>
+        <Text fx:id="scoreLabel" layoutX="341.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Let's Take a Dive..." wrappingWidth="150.00746631622314" />
+      <Hyperlink fx:id="newUserLink" layoutX="409.0" layoutY="310.0" onAction="#newUserPage" text="New user? Sign up hereee..." />
+   </children>
+</AnchorPane>
