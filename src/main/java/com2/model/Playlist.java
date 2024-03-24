@@ -3,6 +3,7 @@
 
 package com2.model;
 
+//this is a comment
 public class Playlist {
 
 }

@@ -44,7 +44,7 @@ public class LoginController {
     }
 
 
-    //this code runs when clicking the login button on the welcome page.
+    //this method handles the click event of the login button
     @FXML
     protected void onLoginClick(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("scbmhomemc.fxml")));

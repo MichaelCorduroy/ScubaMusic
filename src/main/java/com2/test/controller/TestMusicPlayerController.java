@@ -1,4 +1,4 @@
-// Unit tests for the MusicPlayerController.
+// Unit tests for the com2.audio.MusicPlayerController.
 
 
 package com2.test.controller;
