@@ -30,14 +30,14 @@
    <AnchorPane prefHeight="263.0" prefWidth="600.0" />
    <AnchorPane prefHeight="98.0" prefWidth="600.0">
       <children>
-         <ProgressBar fx:id="songProgressBar" layoutX="1.0" layoutY="-3.0" prefHeight="20.0" prefWidth="599.0" progress="0.0" />
+         <ProgressBar fx:id="songProgressBar" layoutX="1.0" layoutY="-3.0" onDragDetected="#speedScrubbing" prefHeight="20.0" prefWidth="599.0" progress="0.0" />
          <ImageView fx:id="volumeController" fitHeight="30.0" fitWidth="32.0" layoutX="398.0" layoutY="37.0" onMouseEntered="#volumeChange" onMouseExited="#volumeLeft" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@../../../graphics/volume.png" />
             </image>
          </ImageView>
          <Slider fx:id="volumeSlider" layoutX="420.0" layoutY="44.0" onMouseEntered="#volumeChanging" onMouseExited="#volumeLeaving" prefHeight="16.0" prefWidth="156.0" value="50.0" />
-         <HBox fx:id="mainControls" alignment="CENTER" layoutX="197.0" layoutY="34.0" prefHeight="36.0" prefWidth="193.0">
+         <HBox fx:id="mainControls" alignment="CENTER" layoutX="197.0" layoutY="34.0" onMouseClicked="#speedScrubbing" prefHeight="36.0" prefWidth="193.0">
             <children>
                <Button fx:id="prevButton" mnemonicParsing="false" onAction="#prevMedia" text="Prev">
                   <HBox.margin>

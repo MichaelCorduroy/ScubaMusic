@@ -23,6 +23,9 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
+import javafx.event.EventHandler;
+
+
 public class MusicController implements Initializable{
 
     //instantiates references to Music Controller elements
@@ -126,7 +129,7 @@ public class MusicController implements Initializable{
                 }
             }
         };
-        timer.scheduleAtFixedRate(task, 1000, 1000);
+        timer.scheduleAtFixedRate(task, 500, 500);
     }
 
     public void cancelTimer(){
@@ -268,4 +271,14 @@ public class MusicController implements Initializable{
         }
     }
 
+    public void speedScrubbing(MouseEvent mouseEvent) {
+
+        double clickPosition = mouseEvent.getX();
+        System.out.println(clickPosition);
+        double mediaDuration = mediaPlayer.getMedia().getDuration().toMillis();
+        double newPosition = clickPosition / songProgressBar.getWidth() * mediaDuration;
+        mediaPlayer.seek(Duration.millis(newPosition));
+
+
+    }
 }
