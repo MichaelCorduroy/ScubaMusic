@@ -17,6 +17,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 
+import com2.model.Song;
+import com2.model.Playlist;
+
+
+
+
 public class ScubaMusic extends Application {
 
     public boolean paused = false;
