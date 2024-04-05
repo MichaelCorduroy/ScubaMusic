@@ -7,7 +7,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.sql;
+//import java.sql;
 
 
 
@@ -17,8 +17,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 
-import com2.model.Song;
-import com2.model.Playlist;
+
+
+
+
+
 
 
 

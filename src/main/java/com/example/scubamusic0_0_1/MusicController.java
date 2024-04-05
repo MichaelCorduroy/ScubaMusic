@@ -25,6 +25,10 @@ import javafx.util.Duration;
 
 import javafx.event.EventHandler;
 
+import com2.model.Song;
+import com2.model.Playlist;
+
+
 
 public class MusicController implements Initializable{
 
@@ -37,6 +41,8 @@ public class MusicController implements Initializable{
     public ProgressBar songProgressBar;
     public Label songLabel;
 
+    public Playlist playList;
+
     private ArrayList<File> songs;
     private File directory;
     private File[] files;
@@ -45,6 +51,8 @@ public class MusicController implements Initializable{
     private int songIndex;
     private Timer timer;
     private TimerTask task;
+
+
 
 
 
@@ -57,19 +65,25 @@ public class MusicController implements Initializable{
     private boolean running = false;
 
 
-
+    //this function initializes the music controller
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
         songs = new ArrayList<File>();
+
+        //initializes initial playlist
+        playList = new Playlist("MainMix");
+
+        //checks local files for music
         directory = new File("src/main/java/com2/audio/localmusicfiles/");
         files = directory.listFiles((file) -> !file.getName().startsWith("."));
 
-        System.out.println(directory.isDirectory());
+        //System.out.println(directory.isDirectory());
 
         if(files != null){
             //songs.addAll(Arrays.asList(files));
             for(File file : files) {
                 System.out.println(file);
+                Song newSong = new Song("title", "artist", "genre","album");
                 songs.add(file);
             }
         }
