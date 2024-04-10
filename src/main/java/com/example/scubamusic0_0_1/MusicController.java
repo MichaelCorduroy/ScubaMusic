@@ -23,10 +23,8 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-import javafx.event.EventHandler;
-
-import com2.model.Song;
-import com2.model.Playlist;
+import pak2.model.Song;
+import pak2.model.Playlist;
 
 
 
@@ -74,7 +72,7 @@ public class MusicController implements Initializable{
         playList = new Playlist("MainMix");
 
         //checks local files for music
-        directory = new File("src/main/java/com2/audio/localmusicfiles/");
+        directory = new File("src/main/java/pak2/audio/localmusicfiles/");
         files = directory.listFiles((file) -> !file.getName().startsWith("."));
 
         //System.out.println(directory.isDirectory());
