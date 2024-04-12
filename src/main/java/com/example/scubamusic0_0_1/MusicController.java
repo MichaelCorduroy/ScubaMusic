@@ -10,12 +10,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 
@@ -40,6 +44,9 @@ public class MusicController implements Initializable{
     public Label songLabel;
 
     public Playlist playList;
+    public ImageView playImage;
+    public Button replayButton;
+
 
     private ArrayList<File> songs;
     private File directory;
@@ -62,6 +69,18 @@ public class MusicController implements Initializable{
     public boolean playing = false;
     private boolean running = false;
 
+
+    InputStream stream = new FileInputStream("src/main/resources/icons/pause.png");
+    Image pauseImage = new Image(stream);
+    InputStream steam = new FileInputStream("src/main/resources/icons/play.png");
+    Image plyImage = new Image(steam);
+
+    //Image pauseImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("src/main/resources/icons/pause.png")));
+    //Image plyImage = new Image(Objects.requireNonNull(getClass().getResourceAsStream("src/main/resources/icons/play.png")));
+    Button btn = new Button();
+
+    public MusicController() throws FileNotFoundException {
+    }
 
     //this function initializes the music controller
     @Override
@@ -101,8 +120,10 @@ public class MusicController implements Initializable{
                 mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
             }
         });
-
-
+        playButton.setBackground(null);
+        prevButton.setBackground(null);
+        nextButton.setBackground(null);
+        replayButton.setBackground(null);
     }
 
     //this method handles playing song media
@@ -116,9 +137,9 @@ public class MusicController implements Initializable{
         });
 
         mediaPlayer.play();
-        playButton.setText("Pause");
+        playImage.setImage(pauseImage);
         //System.out.println("MediaPlayer State: " + mediaPlayer.getStatus());
-
+        //playImage.setImage(plyImage);
     }
 
 
@@ -126,6 +147,7 @@ public class MusicController implements Initializable{
     public void pauseMedia(){
         cancelTimer();
         mediaPlayer.pause();
+        playImage.setImage(plyImage);
     }
 
     //this method handles temporal features including progress bar
@@ -198,15 +220,11 @@ public class MusicController implements Initializable{
     public void playChange(ActionEvent event) {
         if(!playing){
             playMedia();
-            System.out.println("playing");
             playing = true;
-            playButton.setText("Pause");
         }
         else{
             pauseMedia();
-            System.out.println("paused");
             playing = false;
-            playButton.setText("Play");
         }
     }
 
@@ -294,5 +312,9 @@ public class MusicController implements Initializable{
         mediaPlayer.seek(Duration.millis(newPosition));
 
 
+    }
+
+    public void replay(ActionEvent actionEvent) {
+        //todo
     }
 }
