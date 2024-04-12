@@ -101,6 +101,8 @@ public class MusicController implements Initializable{
                 mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
             }
         });
+
+
     }
 
     //this method handles playing song media
