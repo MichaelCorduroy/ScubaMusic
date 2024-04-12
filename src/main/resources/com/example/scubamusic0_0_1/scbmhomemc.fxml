@@ -16,52 +16,89 @@
 <?import javafx.scene.text.Font?>
 
 <VBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.scubamusic0_0_1.MusicController">
-   <AnchorPane prefHeight="55.0" prefWidth="600.0">
+   <AnchorPane prefHeight="74.0" prefWidth="600.0">
       <children>
          <TextField layoutX="380.0" layoutY="12.0" prefHeight="26.0" prefWidth="197.0" promptText="Search" />
-         <MenuButton layoutX="18.0" layoutY="12.0" mnemonicParsing="false" text="Actions">
+         <MenuButton layoutX="71.0" layoutY="12.0" mnemonicParsing="false" text="Actions">
            <items>
              <MenuItem mnemonicParsing="false" text="Action 1" />
              <MenuItem mnemonicParsing="false" text="Action 2" />
            </items>
          </MenuButton>
+         <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="19.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../../graphics/lightProfileImage.png" />
+            </image>
+         </ImageView>
       </children>
    </AnchorPane>
-   <AnchorPane prefHeight="263.0" prefWidth="600.0" />
+   <AnchorPane prefHeight="263.0" prefWidth="600.0">
+      <children>
+         <Slider fx:id="volumeSlider" layoutX="382.0" layoutY="194.0" onMouseEntered="#volumeChanging" onMouseExited="#volumeLeaving" prefHeight="16.0" prefWidth="156.0" value="50.0" />
+      </children></AnchorPane>
    <AnchorPane prefHeight="98.0" prefWidth="600.0">
       <children>
          <ProgressBar fx:id="songProgressBar" layoutX="1.0" layoutY="-3.0" onDragDetected="#speedScrubbing" prefHeight="20.0" prefWidth="599.0" progress="0.0" />
-         <ImageView fx:id="volumeController" fitHeight="30.0" fitWidth="32.0" layoutX="398.0" layoutY="37.0" onMouseEntered="#volumeChange" onMouseExited="#volumeLeft" pickOnBounds="true" preserveRatio="true">
+         <ImageView fx:id="volumeController" fitHeight="21.0" fitWidth="22.0" layoutX="494.0" layoutY="41.0" onMouseEntered="#volumeChange" onMouseExited="#volumeLeft" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@../../../graphics/volume.png" />
             </image>
          </ImageView>
-         <Slider fx:id="volumeSlider" layoutX="420.0" layoutY="44.0" onMouseEntered="#volumeChanging" onMouseExited="#volumeLeaving" prefHeight="16.0" prefWidth="156.0" value="50.0" />
          <HBox fx:id="mainControls" alignment="CENTER" layoutX="197.0" layoutY="34.0" onMouseClicked="#speedScrubbing" prefHeight="36.0" prefWidth="193.0">
             <children>
-               <Button fx:id="prevButton" mnemonicParsing="false" onAction="#prevMedia" text="Prev">
+               <Button fx:id="prevButton" mnemonicParsing="false" onAction="#prevMedia">
                   <HBox.margin>
                      <Insets left="5.0" right="5.0" />
                   </HBox.margin>
+                  <graphic>
+                     <ImageView fitHeight="18.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../icons/prev.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
                </Button>
-                     <Button fx:id="playButton" mnemonicParsing="false" onAction="#playChange" text="Play">
+                     <Button fx:id="playButton" mnemonicParsing="false" onAction="#playChange">
                   <HBox.margin>
                      <Insets left="5.0" right="5.0" />
                   </HBox.margin>
+                  <graphic>
+                     <ImageView fx:id="playImage" fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../icons/play.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
                </Button>
-               <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextMedia" text="Next">
+               <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextMedia">
                   <HBox.margin>
                      <Insets left="5.0" right="5.0" />
                   </HBox.margin>
+                  <graphic>
+                     <ImageView fitHeight="16.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+                        <image>
+                           <Image url="@../../../icons/prev.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
                </Button>
             </children>
          </HBox>
-         <ImageView fitHeight="70.0" fitWidth="70.0" layoutX="11.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" />
+         <ImageView fitHeight="60.0" fitWidth="65.0" layoutX="6.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" />
          <Label fx:id="songLabel" layoutX="85.0" layoutY="44.0" text="Song Title">
             <font>
                <Font name="Courier New Bold" size="13.0" />
             </font>
          </Label>
+         <Button fx:id="replayButton" layoutX="378.0" layoutY="39.0" mnemonicParsing="false">
+            <graphic>
+               <ImageView fitHeight="15.0" fitWidth="19.0" opacity="0.16" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../icons/repeat.png" />
+                  </image>
+               </ImageView>
+            </graphic>
+         </Button>
       </children>
    </AnchorPane>
 
