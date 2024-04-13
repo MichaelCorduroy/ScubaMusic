@@ -2,17 +2,17 @@ package com.example.scubamusic0_0_1;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
@@ -46,6 +46,9 @@ public class MusicController implements Initializable{
     public Playlist playList;
     public ImageView playImage;
     public Button replayButton;
+    public ImageView replayImg;
+    public TextField searchBar;
+    public ListView<String> resultsList;
 
 
     private ArrayList<File> songs;
@@ -69,6 +72,10 @@ public class MusicController implements Initializable{
     public boolean playing = false;
     private boolean running = false;
 
+    private boolean replaying = false;
+
+
+
 
     InputStream stream = new FileInputStream("src/main/resources/icons/pause.png");
     Image pauseImage = new Image(stream);
@@ -82,10 +89,18 @@ public class MusicController implements Initializable{
     public MusicController() throws FileNotFoundException {
     }
 
+
+    private final ObservableList<String> filteredSongs = FXCollections.observableArrayList();
+
+
     //this function initializes the music controller
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
         songs = new ArrayList<File>();
+
+        // Dropdown menu
+
+
 
         //initializes initial playlist
         playList = new Playlist("MainMix");
@@ -124,6 +139,7 @@ public class MusicController implements Initializable{
         prevButton.setBackground(null);
         nextButton.setBackground(null);
         replayButton.setBackground(null);
+
     }
 
     //this method handles playing song media
@@ -162,6 +178,7 @@ public class MusicController implements Initializable{
 
                 if(currentTime/end == 1){
                     cancelTimer();
+                    nextMedia();
                 }
             }
         };
@@ -275,7 +292,9 @@ public class MusicController implements Initializable{
     public void nextMedia(){
         //checks playlist bounds
         if(songIndex < songs.size() - 1){
-            songIndex++;
+            if(!replaying) {
+                songIndex++;
+            }
             mediaPlayer.stop();
             if(running){
                 cancelTimer();
@@ -289,7 +308,9 @@ public class MusicController implements Initializable{
         }
         //if skipping the last song return to beginning of playlist
         else{
-            songIndex = 0;
+            if(!replaying) {
+                songIndex = 0;
+            }
             mediaPlayer.stop();
             if(running){
                 cancelTimer();
@@ -315,6 +336,45 @@ public class MusicController implements Initializable{
     }
 
     public void replay(ActionEvent actionEvent) {
-        //todo
+        if(!replaying){
+            replaying = true;
+            replayImg.setOpacity(1);
+        }
+        else {
+            replaying = false;
+            replayImg.setOpacity(0.16);
+        }
     }
-}
+
+    public void searching(KeyEvent keyEvent) {
+
+        String searchTerm = searchBar.getText().toLowerCase();
+
+        if(!searchTerm.isEmpty()) {
+            filteredSongs.clear();
+            for (File song : songs) {
+                if (song.getName().toLowerCase().contains(searchTerm)) {
+                    String baseName = "";
+                    int extensionIndex = song.getName().lastIndexOf('.'); // Find the last dot
+
+                    if (extensionIndex > 0) {
+                        baseName = song.getName().substring(0, extensionIndex);  // Extract up to the dot
+                    }
+                    filteredSongs.add(baseName);
+                }
+            }
+            if(!filteredSongs.isEmpty()) {
+                resultsList.setItems(filteredSongs);
+            }
+            else{
+                filteredSongs.add("No results found :(");
+                resultsList.setItems(filteredSongs);
+            }
+            resultsList.setVisible(true);
+        }
+        else{
+            resultsList.setVisible(false);
+        }
+    }
+    }
+

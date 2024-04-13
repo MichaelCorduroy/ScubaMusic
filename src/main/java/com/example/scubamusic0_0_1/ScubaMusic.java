@@ -40,7 +40,7 @@ public class ScubaMusic extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ScubaMusic.class.getResource("scbmwelcome.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
         stage.setTitle("ScubaMusic v. 0.0.1");
         stage.getIcons().add(new Image("scubaLogo.png"));
         //stage.setTooltip(tooltip);
