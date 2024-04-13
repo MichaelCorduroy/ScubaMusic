@@ -21,7 +21,7 @@
    <AnchorPane prefHeight="27.0" prefWidth="1000.0">
       <children>
          <TextField fx:id="searchBar" layoutX="770.0" layoutY="26.0" onKeyReleased="#searching" prefHeight="26.0" prefWidth="197.0" promptText="Search" />
-         <MenuButton layoutX="68.0" layoutY="26.0" mnemonicParsing="false" text="Actions">
+         <MenuButton fx:id="activePlaylist" layoutX="68.0" layoutY="26.0" mnemonicParsing="false" style="-fx-pref-width: 400;" text="Active Playlist">
            <items>
              <MenuItem mnemonicParsing="false" text="Action 1" />
              <MenuItem mnemonicParsing="false" text="Action 2" />
@@ -46,12 +46,12 @@
                <Image url="@../../../graphics/aqua.gif" />
             </image>
          </ImageView>
-         <Text layoutX="28.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create a Playlist" wrappingWidth="489.46768086341035">
+         <Text layoutX="29.0" layoutY="83.0" opacity="0.59" strokeType="OUTSIDE" strokeWidth="0.0" text="Does a fish ask why it swims?.." wrappingWidth="643.2723683634104">
             <font>
-               <Font name="Bodoni 72 Oldstyle Bold" size="72.0" />
+               <Font name="Futura Bold" size="72.0" />
             </font>
          </Text>
-         <ListView fx:id="resultsList" layoutX="713.0" layoutY="7.0" prefHeight="199.0" prefWidth="263.0" visible="false" />
+         <ListView fx:id="resultsList" layoutX="713.0" layoutY="7.0" onMouseClicked="#selectSong" prefHeight="199.0" prefWidth="263.0" visible="false" />
       </children></AnchorPane>
    <AnchorPane prefHeight="98.0" prefWidth="600.0">
       <children>
