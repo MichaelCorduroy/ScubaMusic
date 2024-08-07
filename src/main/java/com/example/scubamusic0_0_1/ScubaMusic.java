@@ -42,9 +42,10 @@ public class ScubaMusic extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(ScubaMusic.class.getResource("scbmwelcome.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
         stage.setTitle("ScubaMusic v. 0.0.1");
-        stage.getIcons().add(new Image("scubaLogo.png"));
+        //stage.getIcons().add(new Image("scubaLogo.png"));
         //stage.setTooltip(tooltip);
         stage.setScene(scene);
+	stage.setResizable(false);
         stage.show();
     }
 

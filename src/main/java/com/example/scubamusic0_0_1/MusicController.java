@@ -53,6 +53,7 @@ public class MusicController implements Initializable{
     public MenuButton activePlaylist;
 
 
+    private ArrayList<File> universe;
     private ArrayList<File> songs;
 
     private ArrayList<String> mix;
@@ -103,10 +104,16 @@ public class MusicController implements Initializable{
     //this function initializes the music controller
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
+	
+	//  this is a collection of all the local music files	
+        universe = new ArrayList<File>();
+
+	// for all intents this is the local music queue
         songs = new ArrayList<File>();
+
         mix = new ArrayList<String>();
 
-        // Dropdown menu
+        // this sets and updates the search results in the search area 
         resultsList.getSelectionModel().selectedItemProperty().addListener(
 
                 (observable, oldValue, newValue) -> {
@@ -121,7 +128,9 @@ public class MusicController implements Initializable{
                             allSearchResults.remove(selectedIndex);
                             allSearchResults.add(0, selectedItem);
                         }
-                        System.out.println(newValue);
+                        //this runs if a search result is selected
+                        System.out.println("Expected play: " + newValue);
+                        System.out.println("Passed Queue: " + allSearchResults);
                         playSong(allSearchResults);
                     }
                     else{
@@ -138,22 +147,23 @@ public class MusicController implements Initializable{
         directory = new File("src/main/java/pak2/audio/localmusicfiles/");
         files = directory.listFiles((file) -> !file.getName().startsWith("."));
 
-        //System.out.println(directory.isDirectory());
 
+	// this fills the universe with all the music in  local storage 
         if(files != null){
-            //songs.addAll(Arrays.asList(files));
+            //universe.addAll(Arrays.asList(files));
             for(File file : files) {
-                System.out.println(file);
+                //System.out.println(file);
                 Song newSong = new Song("title", "artist", "genre","album");
-                songs.add(file);
+                universe.add(file);
             }
         }
         else{
+	//this runs when there are no local music files to play 
             System.out.println(directory.getAbsolutePath());
             System.out.println("No files found in directory.");
         }
 
-        for (File song : songs) {
+        for (File song : universe) {
                 String baseName = "";
                 int extensionIndex = song.getName().lastIndexOf('.'); // Find the last dot
 
@@ -162,7 +172,14 @@ public class MusicController implements Initializable{
                 }
                 mix.add(baseName);
         }
-        System.out.println(songs);
+
+        System.out.println("Universe length: " + universe.size());
+
+	//copies songs in universe to initial queue
+	songs.addAll(universe);
+
+
+
 
 
             for (String song : mix) {
@@ -171,7 +188,7 @@ public class MusicController implements Initializable{
             }
 
 
-        //loads up a new song
+        //loads up a new song x0
         media = new Media(songs.get(songIndex).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         songLabel.setText(songs.get(songIndex).getName());
@@ -179,13 +196,19 @@ public class MusicController implements Initializable{
         volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
+                mediaPlayer.setVolume(volumeSlider.getValue() * 0.01 * 0.25);
+                //System.out.println(volumeSlider.getValue() * 0.01 * 0.25);
             }
         });
+
+        //  this  stuff sets initial style settings
         playButton.setBackground(null);
         prevButton.setBackground(null);
         nextButton.setBackground(null);
         replayButton.setBackground(null);
+
+        //this sets the progress bar color
+	    songProgressBar.setStyle("-fx-accent: pink;");
 
     }
 
@@ -313,6 +336,7 @@ public class MusicController implements Initializable{
                 //loads up a new song
                 media = new Media(songs.get(songIndex).toURI().toString());
                 mediaPlayer = new MediaPlayer(media);
+                mediaPlayer.setVolume(volumeSlider.getValue() * 0.01 * 0.25);
                 songLabel.setText(songs.get(songIndex).getName());
                 playMedia();
             }
@@ -350,6 +374,7 @@ public class MusicController implements Initializable{
             //loads up a new song
             media = new Media(songs.get(songIndex).toURI().toString());
             mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setVolume(volumeSlider.getValue() * 0.01 * 0.25);
             songLabel.setText(songs.get(songIndex).getName());
             playMedia();
         }
@@ -366,6 +391,7 @@ public class MusicController implements Initializable{
             //loads up a new song
             media = new Media(songs.get(songIndex).toURI().toString());
             mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setVolume(volumeSlider.getValue() * 0.01 * 0.25);
             songLabel.setText(songs.get(songIndex).getName());
             playMedia();
         }
@@ -393,6 +419,7 @@ public class MusicController implements Initializable{
         }
     }
 
+    //this function handles the search algorithm and searches from universe
     public void searching(KeyEvent keyEvent) {
 
         String searchTerm = searchBar.getText().toLowerCase();
@@ -400,7 +427,7 @@ public class MusicController implements Initializable{
         if(!searchTerm.isEmpty()) {
             filteredSongs.clear();
             allSearchResults.clear();
-            for (File song : songs) {
+            for (File song : universe) {
                 if (song.getName().toLowerCase().contains(searchTerm)) {
                     String baseName = "";
                     int extensionIndex = song.getName().lastIndexOf('.'); // Find the last dot
@@ -414,12 +441,10 @@ public class MusicController implements Initializable{
             if(!filteredSongs.isEmpty()) {
                 resultsList.setItems(filteredSongs);
                 allSearchResults.addAll(filteredSongs);
-                System.out.println(allSearchResults.toString());
             }
             else{
                 filteredSongs.add("No results found :(");
                 resultsList.setItems(filteredSongs);
-
             }
             resultsList.setVisible(true);
         }
@@ -430,20 +455,33 @@ public class MusicController implements Initializable{
 
 
     private void playSong(ArrayList<String> searchResults) {
-        // Construct the path to the song file based on the song title (replace with your logic)
 
+        //clear queue
         songs.clear();
+
+        // Construct the path to the song file based on the song title
         for(String result: searchResults) {
             String songPath = result + ".wav";
             directory = new File("src/main/java/pak2/audio/localmusicfiles/" + songPath);
             songs.add(directory);
         }
         try {
+            //stop playing previous song
+            //cancelTimer();
+            mediaPlayer.stop();
+
+            //debugging the queue
+            System.out.println("Recieved Queue: " + songs);
+
+            //start new queue and play new song
             songIndex = 0;
-            media = new Media(songs.get(songIndex).toURI().toString());
+            String newSong = songs.get(songIndex).toURI().toString();
+            media = new Media(newSong);
             mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.setVolume(volumeSlider.getValue() * 0.01 * 0.25);
+            System.out.println("Actual play: " + newSong);
             playMedia();
-            mediaPlayer.play();
+            //mediaPlayer.play();
             songLabel.setText(songs.get(songIndex).getName());
         } catch (Exception e){
             // Handle potential exceptions during playback
@@ -452,22 +490,9 @@ public class MusicController implements Initializable{
     }
 
 
-
+    // this runs when one of the search results is selected
     public void selectSong(MouseEvent mouseEvent) {
-            songs.clear();
-            directory = new File("src/main/java/pak2/audio/localmusicfiles/");
-            files = directory.listFiles((file) -> !file.getName().startsWith("."));
-
-            //System.out.println(directory.isDirectory());
-
-            if (files != null) {
-                //songs.addAll(Arrays.asList(files));
-                for (File file : files) {
-                    System.out.println(file);
-                    Song newSong = new Song("title", "artist", "genre", "album");
-                    songs.add(file);
-                }
-            }
+            //empty rn
         }
 
 }
