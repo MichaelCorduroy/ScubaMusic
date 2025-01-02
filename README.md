@@ -1,1 +1,1 @@
-ScubaMusic is a lightweight music streaming platform in current production. 
+ScubaMusic was a barebones desktop mp3 player. RIP 2023-2024.
